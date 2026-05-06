@@ -1,0 +1,37 @@
+127.0.0.1 - - [06/May/2026 13:57:06] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [06/May/2026 13:57:06] "GET /assets/caracol_bg.png HTTP/1.1" 200 -
+127.0.0.1 - - [06/May/2026 13:57:06] "GET /style.css HTTP/1.1" 200 -
+127.0.0.1 - - [06/May/2026 13:57:06] "GET /game.js HTTP/1.1" 200 -
+127.0.0.1 - - [06/May/2026 13:57:07] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:07] "GET /assets/click.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:07] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:07] "GET /assets/success.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:32] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [06/May/2026 13:57:32] "GET /game.js HTTP/1.1" 200 -
+127.0.0.1 - - [06/May/2026 13:57:32] "GET /style.css HTTP/1.1" 200 -
+127.0.0.1 - - [06/May/2026 13:57:32] "GET /assets/caracol_bg.png HTTP/1.1" 200 -
+127.0.0.1 - - [06/May/2026 13:57:34] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:34] "GET /assets/click.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:34] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:34] "GET /assets/success.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:35] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:35] "GET /assets/click.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:35] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:35] "GET /assets/success.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:37] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:37] "GET /assets/click.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:38] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:38] "GET /assets/click.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:38] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:38] "GET /assets/click.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:39] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:39] "GET /assets/click.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:39] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:39] "GET /assets/click.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:40] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:40] "GET /assets/success.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:40] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:40] "GET /assets/success.wav HTTP/1.1" 404 -
+127.0.0.1 - - [06/May/2026 13:57:41] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [06/May/2026 13:57:41] code 404, message File not found
+127.0.0.1 - - [06/May/2026 13:57:41] "GET /assets/success.wav HTTP/1.1" 404 -
