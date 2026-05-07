@@ -15,6 +15,13 @@ const gameState = {
     correctOrder: ['太陽', '月', '星', '蛇']
 };
 
+const SYMBOL_MAP = {
+    '太陽': '☀️',
+    '月': '🌙',
+    '星': '⭐',
+    '蛇': '🐍'
+};
+
 // --- DOM Elements ---
 const currentCoinsEl = document.getElementById('current-coins');
 const inventorySlots = [
@@ -37,8 +44,7 @@ const checkPuzzleBtn = document.getElementById('check-puzzle-btn');
 function playSound(name) {
     const audio = new Audio(`assets/${name}.wav`);
     audio.play().catch(() => {
-        // Ignore errors if audio files are missing
-        console.log(`Sound file ${name}.wav not found or could not be played.`);
+        // Ignore missing audio files
     });
 }
 
@@ -53,7 +59,10 @@ function addCoin(source) {
     playSound('success');
 
     if (gameState.coins >= gameState.maxCoins) {
-        enterRuinsBtn.classList.remove('hidden');
+        setTimeout(() => {
+            enterRuinsBtn.classList.remove('hidden');
+            playSound('success');
+        }, 500);
     }
 }
 
@@ -64,8 +73,10 @@ function updateUI() {
     for (let i = 0; i < gameState.maxCoins; i++) {
         if (i < gameState.coins) {
             inventorySlots[i].textContent = '🪙';
+            inventorySlots[i].classList.add('filled');
         } else {
             inventorySlots[i].textContent = '';
+            inventorySlots[i].classList.remove('filled');
         }
     }
 }
@@ -107,7 +118,7 @@ document.getElementById('hotspot-center').addEventListener('click', () => {
 document.getElementById('hotspot-right').addEventListener('click', () => {
     playSound('click');
     if (gameState.hasCoin.puzzle) {
-        showMessage("入口の仕掛けは既に解かれている。");
+        showMessage("入口の封印は既に解かれている。");
     } else {
         showPuzzle();
     }
@@ -119,8 +130,8 @@ document.querySelectorAll('.close-modal-btn').forEach(btn => {
 
 enterRuinsBtn.addEventListener('click', () => {
     playSound('success');
-    alert("おめでとう！あなたはカラコルの深淵へと足を踏み入れた...");
-    location.reload(); // Reset game for demo
+    alert("おめでとう！あなたはカラコルの秘密を解き明かし、遺跡の深淵へと足を踏み入れた...");
+    location.reload();
 });
 
 // --- Puzzle Logic ---
@@ -131,27 +142,24 @@ function resetPuzzle() {
         slot.textContent = '';
         slot.classList.remove('filled');
     });
-    // Restore all pieces to the tray
-    const tray = document.getElementById('puzzle-pieces');
+    // Restore pieces
     puzzlePieces.forEach(piece => {
-        tray.appendChild(piece);
         piece.classList.remove('hidden');
     });
 }
 
-// Simple click-to-move logic for puzzle pieces
 puzzlePieces.forEach(piece => {
     piece.addEventListener('click', () => {
         playSound('click');
-        // Find first empty slot
         const emptySlotIndex = gameState.puzzleOrder.findIndex(item => item === null);
         if (emptySlotIndex !== -1) {
-            const symbol = piece.getAttribute('data-type');
-            gameState.puzzleOrder[emptySlotIndex] = symbol;
+            const type = piece.getAttribute('data-type');
+            gameState.puzzleOrder[emptySlotIndex] = type;
 
             const slot = puzzleSlots[emptySlotIndex];
-            slot.textContent = piece.textContent;
-            piece.classList.add('hidden'); // Hide from tray
+            slot.textContent = SYMBOL_MAP[type];
+            slot.classList.add('filled');
+            piece.classList.add('hidden');
         }
     });
 });
@@ -160,14 +168,14 @@ puzzleSlots.forEach((slot, index) => {
     slot.addEventListener('click', () => {
         if (gameState.puzzleOrder[index]) {
             playSound('click');
-            const symbol = gameState.puzzleOrder[index];
+            const type = gameState.puzzleOrder[index];
             gameState.puzzleOrder[index] = null;
 
-            // Show the piece back in tray
-            const piece = Array.from(puzzlePieces).find(p => p.getAttribute('data-type') === symbol);
+            const piece = Array.from(puzzlePieces).find(p => p.getAttribute('data-type') === type);
             if (piece) piece.classList.remove('hidden');
 
             slot.textContent = '';
+            slot.classList.remove('filled');
         }
     });
 });
@@ -177,10 +185,11 @@ checkPuzzleBtn.addEventListener('click', () => {
 
     if (isCorrect) {
         playSound('success');
-        alert("仕掛けが動いた！コインを手に入れた。");
+        alert("仕掛けが作動した！コインが手に入った。");
         addCoin('puzzle');
         closeModal();
     } else {
+        playSound('click');
         alert("何も起こらない... 順番が違うようだ。");
     }
 });

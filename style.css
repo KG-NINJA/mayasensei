@@ -1,0 +1,332 @@
+:root {
+    --maya-gold: #ffd700;
+    --maya-stone: #4a4a4a;
+    --maya-dark: #1a1a1a;
+    --maya-glow: rgba(255, 215, 0, 0.7);
+    --game-width: 1536px;
+    --game-height: 512px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #0d0d0d;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    color: #e0d0b0;
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ビューポート（横スクロール可能） */
+#viewport {
+    width: 100%;
+    max-width: 100%;
+    height: var(--game-height);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    position: relative;
+    border-top: 6px solid #3d2b1f;
+    border-bottom: 6px solid #3d2b1f;
+    background: #000;
+}
+
+#viewport::-webkit-scrollbar {
+    height: 12px;
+}
+#viewport::-webkit-scrollbar-track {
+    background: #1a120b;
+}
+#viewport::-webkit-scrollbar-thumb {
+    background: #5d4037;
+    border: 2px solid #3d2b1f;
+    border-radius: 6px;
+}
+
+#game-world {
+    position: relative;
+    height: var(--game-height);
+    width: var(--game-width);
+    overflow: hidden;
+    background-image: url('assets/caracol_bg.png');
+    background-size: 1536px 1024px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+
+/* クリックポイント (Hotspots) */
+.hotspot {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid var(--maya-gold);
+    box-shadow: 0 0 20px var(--maya-glow);
+    animation: pulse 2s infinite;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+.hotspot:hover .pulse-ring {
+    transform: scale(1.2);
+    box-shadow: 0 0 30px #fff;
+    border-color: #fff;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.7); opacity: 0.8; }
+    50% { transform: scale(1.0); opacity: 0.2; }
+    100% { transform: scale(0.7); opacity: 0.8; }
+}
+
+/* ホットスポットの正確な位置 */
+#hotspot-left { left: 272px; top: 346px; }
+#hotspot-center { left: 644px; top: 389px; }
+#hotspot-right { left: 1114px; top: 197px; }
+
+/* UI Layer */
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 20;
+}
+
+#coin-display {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(26, 18, 11, 0.9);
+    color: var(--maya-gold);
+    padding: 15px 30px;
+    border: 3px solid #8d6e63;
+    border-radius: 15px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    pointer-events: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-image: linear-gradient(to bottom, #d4af37, #8d6e63) 1;
+}
+
+.coin-icon {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 0 5px var(--maya-gold));
+}
+
+#inventory-bar {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    background: rgba(30, 20, 10, 0.95);
+    padding: 15px 25px;
+    border: 4px solid #5d4037;
+    border-radius: 20px;
+    pointer-events: auto;
+    box-shadow: 0 -5px 25px rgba(0,0,0,0.8);
+}
+
+.slot {
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #8d6e63;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slot.filled {
+    background: radial-gradient(circle, #5d4037, #1a120b);
+    border-color: var(--maya-gold);
+    box-shadow: inset 0 0 15px var(--maya-gold);
+    transform: scale(1.05);
+}
+
+#enter-ruins-btn {
+    position: fixed;
+    bottom: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px 50px;
+    background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+    color: #2e1a05;
+    border: 4px solid #fff;
+    border-radius: 15px;
+    font-size: 2.2rem;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    pointer-events: auto;
+    transition: all 0.3s;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    z-index: 30;
+    animation: entrance-glow 2s infinite alternate;
+}
+
+@keyframes entrance-glow {
+    from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+    to { box-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.4); }
+}
+
+#enter-ruins-btn:hover {
+    transform: translateX(-50%) scale(1.1);
+    filter: brightness(1.2);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* モーダル */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #1a120b;
+    border: 6px solid #8d6e63;
+    color: #f5f5dc;
+    padding: 50px;
+    max-width: 650px;
+    width: 95%;
+    text-align: center;
+    border-radius: 25px;
+    box-shadow: 0 0 60px rgba(212, 175, 55, 0.3);
+    position: relative;
+    background-image: linear-gradient(45deg, #1a120b 25%, #231912 25%, #231912 50%, #1a120b 50%, #1a120b 75%, #231912 75%, #231912 100%);
+    background-size: 40px 40px;
+}
+
+.modal-content h2 {
+    color: var(--maya-gold);
+    margin-top: 0;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    text-shadow: 2px 2px 4px #000;
+}
+
+#message-text {
+    font-size: 1.8rem;
+    line-height: 1.8;
+    margin: 30px 0;
+    color: #ffd;
+}
+
+button.close-modal-btn, #check-puzzle-btn {
+    margin-top: 30px;
+    padding: 15px 45px;
+    background: #3d2b1f;
+    color: var(--maya-gold);
+    border: 3px solid var(--maya-gold);
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+button.close-modal-btn:hover, #check-puzzle-btn:hover {
+    background: var(--maya-gold);
+    color: #1a120b;
+    box-shadow: 0 0 15px var(--maya-gold);
+}
+
+/* パズル */
+#puzzle-board {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 40px 0;
+}
+
+.puzzle-slot {
+    width: 90px;
+    height: 90px;
+    border: 4px dashed #8d6e63;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    transition: border-color 0.3s;
+}
+
+.puzzle-slot.filled {
+    border-style: solid;
+    border-color: var(--maya-gold);
+}
+
+#puzzle-pieces {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.piece {
+    width: 90px;
+    height: 90px;
+    background: #2e1a05;
+    border: 3px solid var(--maya-gold);
+    border-radius: 15px;
+    font-size: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    user-select: none;
+    transition: all 0.2s;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+}
+
+.piece:hover {
+    transform: translateY(-8px);
+    border-color: #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+}

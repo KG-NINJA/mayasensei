@@ -11,7 +11,7 @@
         <!-- 横スクロール可能な背景エリア -->
         <div id="viewport">
             <div id="game-world">
-                <img src="assets/caracol_bg.png" alt="Maya Ruins Caracol" id="bg-image">
+                <!-- 背景画像はCSSで制御 -->
 
                 <!-- クリックポイント 1: 左の建物 -->
                 <div class="hotspot" id="hotspot-left" title="石造りの建物">
@@ -49,11 +49,13 @@
         <!-- モーダル / パズル UI -->
         <div id="modal-overlay" class="hidden">
             <div id="modal-container">
+                <!-- メッセージモーダル -->
                 <div id="modal-message" class="modal-content hidden">
                     <p id="message-text"></p>
                     <button class="close-modal-btn">閉じる</button>
                 </div>
 
+                <!-- パズルモーダル -->
                 <div id="modal-puzzle" class="modal-content hidden">
                     <h2>マヤの試練</h2>
                     <p>記号を正しい順番に並べよ</p>
@@ -64,14 +66,14 @@
                         <div class="puzzle-slot" data-index="3"></div>
                     </div>
                     <div id="puzzle-pieces">
-                        <div class="piece" draggable="true" id="piece-sun" data-type="太陽">☀️</div>
-                        <div class="piece" draggable="true" id="piece-moon" data-type="月">🌙</div>
-                        <div class="piece" draggable="true" id="piece-star" data-type="星">⭐</div>
-                        <div class="piece" draggable="true" id="piece-snake" data-type="蛇">🐍</div>
+                        <div class="piece" id="piece-sun" data-type="太陽">☀️</div>
+                        <div class="piece" id="piece-moon" data-type="月">🌙</div>
+                        <div class="piece" id="piece-star" data-type="星">⭐</div>
+                        <div class="piece" id="piece-snake" data-type="蛇">🐍</div>
                     </div>
                     <div class="puzzle-controls">
                         <button id="check-puzzle-btn">確認</button>
-                        <button class="close-modal-btn">閉じる</button>
+                        <button class="close-modal-btn">戻る</button>
                     </div>
                 </div>
             </div>
