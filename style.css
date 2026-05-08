@@ -107,6 +107,7 @@ body, html {
 #hotspot-left { left: 272px; top: 346px; }
 #hotspot-center { left: 644px; top: 389px; }
 #hotspot-right { left: 1114px; top: 197px; }
+#hotspot-relic { left: 887px; top: 443px; } /* Center of the interior image */
 
 /* UI Layer */
 #ui-layer {

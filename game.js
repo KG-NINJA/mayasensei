@@ -128,6 +128,14 @@ document.querySelectorAll('.close-modal-btn').forEach(btn => {
     btn.addEventListener('click', closeModal);
 });
 
+document.getElementById('hotspot-relic').addEventListener('click', () => {
+    playSound('click');
+    showMessage("古代の聖遺物を見つけた！カラコルの真実が今、明かされる...");
+    setTimeout(() => {
+        alert("GAME CLEAR! プレイありがとうございました。");
+    }, 1500);
+});
+
 enterRuinsBtn.addEventListener('click', () => {
     playSound('success');
     transitionToInterior();
@@ -136,6 +144,9 @@ enterRuinsBtn.addEventListener('click', () => {
 function transitionToInterior() {
     // Hide all hotspots
     document.querySelectorAll('.hotspot').forEach(h => h.classList.add('hidden'));
+
+    // Show interior hotspot
+    document.getElementById('hotspot-relic').classList.remove('hidden');
 
     // Change background to interior
     const world = document.getElementById('game-world');
