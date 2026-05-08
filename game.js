@@ -130,9 +130,32 @@ document.querySelectorAll('.close-modal-btn').forEach(btn => {
 
 enterRuinsBtn.addEventListener('click', () => {
     playSound('success');
-    alert("おめでとう！あなたはカラコルの秘密を解き明かし、遺跡の深淵へと足を踏み入れた...");
-    location.reload();
+    transitionToInterior();
 });
+
+function transitionToInterior() {
+    // Hide all hotspots
+    document.querySelectorAll('.hotspot').forEach(h => h.classList.add('hidden'));
+
+    // Change background to interior
+    const world = document.getElementById('game-world');
+    world.style.backgroundImage = "url('assets/caracol_interior.png')";
+    world.style.backgroundSize = "1774px 887px";
+    world.style.width = "1774px";
+    world.style.height = "887px";
+
+    // Update viewport height to accommodate taller image
+    const viewport = document.getElementById('viewport');
+    viewport.style.height = "887px";
+
+    // Hide enter button
+    enterRuinsBtn.classList.add('hidden');
+
+    // Show success message
+    setTimeout(() => {
+        showMessage("あなたはカラコルの深淵に到達した。ここにはさらなる謎が眠っている... (To Be Continued)");
+    }, 1000);
+}
 
 // --- Puzzle Logic ---
 

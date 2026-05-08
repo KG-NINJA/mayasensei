@@ -136,6 +136,7 @@ body, html {
     align-items: center;
     gap: 15px;
     border-image: linear-gradient(to bottom, #d4af37, #8d6e63) 1;
+    text-shadow: 2px 2px 2px #000;
 }
 
 .coin-icon {
