@@ -137,7 +137,100 @@
     "Browser storage may be evicted or blocked by settings; only tested origins and conditions are verified."
   ],
   "publication": {
-    "status": "pending_push",
-    "target": "https://kg-ninja.github.io/mayasensei/"
+    "checked_at_utc": "2026-09-08T01:44:30.110428+00:00",
+    "commit": "8718839a6bb186c28d0e769a334ad1551b01b7b8",
+    "pages_build_status": "built",
+    "files": [
+      {
+        "path": "index.html",
+        "method": "GET",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "content_length": "3305",
+        "sha256": "606e9d49feac739e832379567c984a559b313a91cc24a500f5c297c59acdd479",
+        "matches_commit": true
+      },
+      {
+        "path": "web/index.html",
+        "method": "GET",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "content_length": "2292",
+        "sha256": "870ecb7701a68d71c0798ed4e040111efef814ac548debf06084e7211c2d6ec6",
+        "matches_commit": true
+      },
+      {
+        "path": "web/index.pck",
+        "method": "GET",
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "content_length": "7149896",
+        "sha256": "6fe959bd80b263a51994dc316d478768266e07a7f88c729bc36603c1c613e2bc",
+        "matches_commit": true
+      },
+      {
+        "path": "web/index.wasm",
+        "method": "HEAD",
+        "status": 200,
+        "content_type": "application/wasm",
+        "content_length": "39514754",
+        "matches_local_size": true
+      },
+      {
+        "path": "downloads/manifest.json",
+        "method": "GET",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "content_length": "481",
+        "sha256": "a5fdda323786d8966cb519775bef235179aeae492277646478de3e880cf5bccb",
+        "matches_commit": true
+      },
+      {
+        "path": "downloads/AZTEC3-windows.zip",
+        "method": "HEAD",
+        "status": 200,
+        "content_type": "application/x-zip-compressed",
+        "content_length": "45086829",
+        "matches_local_size": true
+      },
+      {
+        "path": "downloads/AZTEC3-linux.zip",
+        "method": "HEAD",
+        "status": 200,
+        "content_type": "application/x-zip-compressed",
+        "content_length": "35518566",
+        "matches_local_size": true
+      },
+      {
+        "path": "legacy.html",
+        "method": "GET",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "content_length": "3690",
+        "sha256": "09469bca390c98defd4dcd54e2d9f7f17060f176f985fc620f2f585cca689014",
+        "matches_commit": true
+      }
+    ],
+    "status": "verified",
+    "target": "https://kg-ninja.github.io/mayasensei/",
+    "browser_storage": {
+      "checked_at_utc": "2026-09-08T01:47:27.306055+00:00",
+      "origin": "https://kg-ninja.github.io",
+      "path": "/mayasensei/web/",
+      "tab_close_reopen": true,
+      "restored_board": [
+        10,
+        -1,
+        -1
+      ],
+      "restored_hint_count": 1,
+      "restored_observation_count": 3,
+      "console_errors": [],
+      "viewport_verified": [
+        1280,
+        720
+      ]
+    },
+    "code_commit": "8718839a6bb186c28d0e769a334ad1551b01b7b8"
   }
 }
