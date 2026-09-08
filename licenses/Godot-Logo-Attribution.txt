@@ -1,0 +1,4 @@
+Godot Engine Logo
+Copyright (c) 2017 Andrea Calabró
+CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+Used unmodified as Godot-generated default Web icons and splash assets.

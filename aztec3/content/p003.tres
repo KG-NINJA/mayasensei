@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PuzzleDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/puzzle_definition.gd" id="1"]
+[resource]
+script=ExtResource("1")
+id="p003"
+title="三つの証拠、一つの説明"
+prompt="3枚の証拠を、それぞれが直接確かめられる項目に置こう。\n最後に、証拠すべてと矛盾しない展示文を一つ選ぶ。"
+input_domain="証拠0,1,2の順列6通り × 仮説0,1,2 = 18通り"
+correct_rule="evidence_0_1_2_and_hypothesis_2"
+solution=Array[int]([0,1,2,2])
+hints=Array[String](["『数』『写真』『修復票』は、それぞれ違う問いに答える。", "貝形0は持出数、写真は隠れた欄、修復票は最後の一枚の行き先を示す。", "左から『零』『写真』『修復票』。持出数0、地域協力者欄、修復のための移動。この3点を満たす展示文を選ぶ。"])
+explanation="持出数は0。影が隠したのは地域協力者の名前欄。最後の一枚は修復票と照合でき、イネスが乾燥のため移していた。必要なのは発掘ではなく、協力者の名前を展示へ戻すことだった。"
+evidence_id="truth"
+evidence_title="04　戻された名前"
+evidence_text="イネスは乾燥を終えた最後の一枚を戻し、協力者の名前を確認して展示を訂正した。消えていたのは宝ではなく、記録の中で見えなくなった人々の貢献だった。"
+classification="事件・修復票・展示・協力者はすべて創作。特定の実在団体や人物への疑義を示すものではない。"

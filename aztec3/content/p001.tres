@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PuzzleDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/puzzle_definition.gd" id="1"]
+[resource]
+script=ExtResource("1")
+id="p001"
+title="空白とゼロ"
+prompt="展示用模型の A・B・C に、0・5・10 の札を1枚ずつ置く。\nA + B = 10 と B + C = 5 を、同時に満たそう。"
+input_domain="0,5,10 の順列6通り。未配置は-1。"
+correct_rule="unique_0_5_10_and_sum"
+solution=Array[int]([10,0,5])
+hints=Array[String](["同じ B が、二つの条件に出てくる。", "3枚の合計は15。二つの式を足しても15だが、Bは2回数えられる。", "B は 0。A + 0 = 10、0 + C = 5 から残りを決めよう。"])
+explanation="二つの式の合計は A + 2B + C = 15。札3枚の合計も15なので、余分な B は0。A=10、B=0、C=5。貝形の0は、空白とは違う『書かれた数』。"
+evidence_id="zero"
+evidence_title="01　零という記録"
+evidence_text="イネスが手帳の薄い貝形を照合した。『持ち出した遺物の数：0』。記入漏れではなく、何も持ち出していないという記録だった。"
+classification="史実：マヤの数表現では点が1、棒が5、貝形が0。ここでは0〜19の単一桁だけを扱う。模型・記録・人物は創作。"

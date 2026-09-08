@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PuzzleDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/puzzle_definition.gd" id="1"]
+[resource]
+script=ExtResource("1")
+id="p002"
+title="影が隠した記録"
+prompt="写真を回し、丸・三角・四角の位置を基準図と合わせよう。\n向きを直した写真で、斜線の影が隠している記録枠は A・B・C のどれ？"
+input_domain="時計回り回転0,90,180,270度 × A,B,C = 12通り"
+correct_rule="rotation_180_and_slot_B"
+solution=Array[int]([2,1])
+hints=Array[String](["影の形より先に、丸・三角・四角の位置を見比べよう。", "基準図の丸は左上。写真の丸がそこへ来るまで、90度ずつ回す。", "180度回すと3つの印が一致する。斜線は右中央、つまり B の枠に重なる。"])
+explanation="写真を180度回すと、丸は左上、三角は右上、四角は左下になる。影が重なるのは B『地域協力者』。宝の方向を示す矢印ではなく、名前欄を隠した影だった。"
+evidence_id="orientation"
+evidence_title="02　写真の正しい向き"
+evidence_text="逆さの写真を180度直すと、影は B『地域協力者』の欄に重なった。財宝の方向ではなく、展示で読めなくなった人々の名前を示していた。"
+classification="図版は現代の展示資料を使った創作。実在の遺構の測量図でも、太陽・影の精密な再現でもない。"

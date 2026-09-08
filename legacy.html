@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maya Mystery - Caracol</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- 横スクロール可能な背景エリア -->
+        <div id="viewport">
+            <div id="game-world">
+                <!-- 背景画像はCSSで制御 -->
+
+                <!-- クリックポイント 1: 左の建物 -->
+                <div class="hotspot" id="hotspot-left" title="石造りの建物">
+                    <div class="pulse-ring"></div>
+                </div>
+
+                <!-- クリックポイント 2: 中央の石柱 -->
+                <div class="hotspot" id="hotspot-center" title="石柱">
+                    <div class="pulse-ring"></div>
+                </div>
+
+                <!-- クリックポイント 3: 右上の入口 -->
+                <div class="hotspot" id="hotspot-right" title="遺跡の入口">
+                    <div class="pulse-ring"></div>
+                </div>
+
+                <!-- クリックポイント 4: 内部の聖遺物 (初期は非表示) -->
+                <div class="hotspot hidden" id="hotspot-relic" title="聖遺物">
+                    <div class="pulse-ring"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UI オーバーレイ -->
+        <div id="ui-layer">
+            <div id="coin-display">
+                <span class="coin-icon">🪙</span>
+                Coins: <span id="current-coins">0</span> / 3
+            </div>
+
+            <div id="inventory-bar">
+                <div class="slot" id="slot-0"></div>
+                <div class="slot" id="slot-1"></div>
+                <div class="slot" id="slot-2"></div>
+            </div>
+
+            <button id="enter-ruins-btn" class="hidden">遺跡内部へ進む</button>
+        </div>
+
+        <!-- モーダル / パズル UI -->
+        <div id="modal-overlay" class="hidden">
+            <div id="modal-container">
+                <!-- メッセージモーダル -->
+                <div id="modal-message" class="modal-content hidden">
+                    <p id="message-text"></p>
+                    <button class="close-modal-btn">閉じる</button>
+                </div>
+
+                <!-- パズルモーダル -->
+                <div id="modal-puzzle" class="modal-content hidden">
+                    <h2>マヤの試練</h2>
+                    <p>記号を正しい順番に並べよ</p>
+                    <div id="puzzle-board">
+                        <div class="puzzle-slot" data-index="0"></div>
+                        <div class="puzzle-slot" data-index="1"></div>
+                        <div class="puzzle-slot" data-index="2"></div>
+                        <div class="puzzle-slot" data-index="3"></div>
+                    </div>
+                    <div id="puzzle-pieces">
+                        <div class="piece" id="piece-sun" data-type="太陽">☀️</div>
+                        <div class="piece" id="piece-moon" data-type="月">🌙</div>
+                        <div class="piece" id="piece-star" data-type="星">⭐</div>
+                        <div class="piece" id="piece-snake" data-type="蛇">🐍</div>
+                    </div>
+                    <div class="puzzle-controls">
+                        <button id="check-puzzle-btn">確認</button>
+                        <button class="close-modal-btn">戻る</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>

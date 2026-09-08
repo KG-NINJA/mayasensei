@@ -1,0 +1,6 @@
+asset,author,source,license,commercial_use,modification,credit
+"aztec3/scripts/illustration.gd; diagram.gd; numeral.gd","Original artwork created for AZTEC3","This repository","Project original; no third-party art used","Project owner decision","Project owner decision","AZTEC3"
+"aztec3/assets/tap.wav; field_notes.wav","Original synthesis created for AZTEC3","scripts/make_audio.py","Project original; no third-party samples","Project owner decision","Project owner decision","AZTEC3"
+"aztec3/assets/fonts/NotoSansJP.ttf","The Noto Project Authors","https://github.com/notofonts/noto-cjk","SIL Open Font License 1.1; see bundled OFL.txt","Yes","Yes subject to OFL","OFL.txt included in source and downloads"
+"legacy.html; game.js; style.css; assets/*","Existing mayasensei repository contributors","Existing repository history","Unchanged; historical asset license not independently verified","Unverified","Unverified","Retained only for legacy game; not reused by AZTEC3"
+"web/index.icon.png; index.apple-touch-icon.png; index.png","Andrea Calabró / Godot Engine","Godot 4.7.2 export templates","CC BY 4.0; licenses/Godot-Logo-Attribution.txt","Yes with attribution","Yes with attribution","Godot Engine Logo (c) 2017 Andrea Calabró"

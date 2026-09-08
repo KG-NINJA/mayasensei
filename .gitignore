@@ -1,0 +1,5 @@
+aztec3/.godot/
+aztec3/.qa/
+*.log
+build/
+*.tmp

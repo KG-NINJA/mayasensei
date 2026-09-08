@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-09-08T01:37:50.099356+00:00",
+  "scope": "AZTEC3 three-location three-puzzle demo",
+  "source_regression_checks": 126,
+  "regression": {
+    "windows": {
+      "checks": 126,
+      "ending_solved_and_revealed": true,
+      "failures": [],
+      "platform": "Windows",
+      "solutions": [
+        1,
+        1,
+        1
+      ]
+    },
+    "linux": {
+      "checks": 126,
+      "ending_solved_and_revealed": true,
+      "failures": [],
+      "platform": "Linux",
+      "solutions": [
+        1,
+        1,
+        1
+      ]
+    },
+    "web": {
+      "checks": 126,
+      "failures": [],
+      "platform": "Web",
+      "solutions": [
+        1,
+        1,
+        1
+      ],
+      "observed_console_utc": "2026-09-08T01:34:32.342Z"
+    }
+  },
+  "ui": {
+    "windows": {
+      "failures": [],
+      "capture_count": 34,
+      "actual_dimensions": {
+        "1280x720": 17,
+        "1920x1080": 17
+      },
+      "render_environment": "Windows Intel UHD / OpenGL 3.3"
+    },
+    "linux": {
+      "failures": [],
+      "capture_count": 34,
+      "actual_dimensions": {
+        "1280x720": 17,
+        "1920x1080": 17
+      },
+      "render_environment": "Ubuntu WSLg / Mesa llvmpipe / OpenGL 4.5"
+    }
+  },
+  "browser_playthrough": {
+    "origin": "http://127.0.0.1:4190",
+    "all_three_solved_through_clicks": true,
+    "wrong_answers_and_resets_exercised": true,
+    "tab_close_reopen_restored_partial_board_and_hint": true,
+    "recovered_snapshot": {
+      "puzzle": "p001",
+      "board": [
+        10,
+        -1,
+        -1
+      ],
+      "hint_count": 1
+    },
+    "console_errors": []
+  },
+  "independent_review": {
+    "unresolved_findings": [],
+    "source_sha256": {
+      "aztec3/scripts/diagram.gd": "ea760d0c3aa4e1367967a8c56ebf7cd018e91f8fe761d49d5e5c93a268cc39a0",
+      "aztec3/scripts/game_state.gd": "8554fb180b77302ef10e588b4b9ea979bef7abfe71b297acf0f8748affc9777b",
+      "aztec3/scripts/illustration.gd": "0b6875ba9bed9c8e665387b092a309193584c10eb73fb791120a98cdd9bd0245",
+      "aztec3/scripts/main.gd": "30f161180ae6ddde6ee5b5d0c0ea3edd465a3128a726efe3c0b92a0b3d647276",
+      "aztec3/scripts/numeral.gd": "2f33b8eaa675e905b00abbe54729e44a23e80b5c993e20e51f9fb19f5713d74f",
+      "aztec3/scripts/puzzle_definition.gd": "341f5981385bf9f2ad5f623fc2a2982341b9ebf23547b60fefe5cdfa2f7a6587",
+      "aztec3/scripts/rules.gd": "c59353d4cab07d16cb698dd08f08516faff13020c3850add96e8b9d14020bae2",
+      "aztec3/scripts/save_service.gd": "84cc342a598ae8ff194c4a5827853ef714762fe398003e72584d45dfd3eb237c",
+      "aztec3/content/p001.tres": "1a4ee16dfea802d423ea81acdd9f6f57a19a55dca56197e352304803a88f3fd4",
+      "aztec3/content/p002.tres": "ddf2d9c4b83acdf3b9361ec41e9b31d30999d6a8090010138add1719e39d97cc",
+      "aztec3/content/p003.tres": "ebad2e40854b31b229e1a668215ecad9f1872e1403bf8df37c54b7c5bd677b7c",
+      "aztec3/tests/run.gd": "83acf1b09b3bb5b3f7523339f562e501fe899a8e94567a421bdf2509b90bfabc",
+      "aztec3/tests/suite.gd": "e8e2ee544effd7681ee460f693237545b336d8e43f7181157f351b8e95c03ed4",
+      "aztec3/tests/ui_walkthrough.gd": "bb7a7c2876afdbcfbb9fb2c5aa00a161cee38db4b9ac10c52c01c885a9c5547b",
+      "scripts/build.ps1": "ca749fb514c91d8a48c402613136abe9f383daaec2b03c28db28e8621982ed6b",
+      "scripts/package.py": "ebc3d32bd1ba823f6e7c343706477ed34964d668f2e3a119cd513e65c5c11845",
+      "aztec3/web_shell.html": "65223c7250bb1649e17a16cb61cbd32a3a486505e25c43925bdf92cc59568e31",
+      "index.html": "296e1d0ed51bed99aa048bc92f71ea3a72f8b35aa977bcdd69ef98fddc780a55"
+    },
+    "hash_basis": "Local worktree bytes; Git CRLF normalization may alter text byte hashes without content changes."
+  },
+  "legacy_preservation": {
+    "original_commit": "8a38b43c3fd54cde88f8f50bd72a93878abecf02",
+    "all_original_content_preserved": true,
+    "comparison": "Normalized CRLF/LF because checkout uses core.autocrlf",
+    "original_entry_copy": "legacy.html"
+  },
+  "release_files": [
+    {
+      "file": "AZTEC3-windows.zip",
+      "bytes": 45086829,
+      "sha256": "a870ae69f5f28d98a7a37ab74769e7e6ccfa92f4cbde495ab8a29f017a034140",
+      "executable_sha256": "87415b89108ad4104aa12b9ca080bc7c195245a27526a9be299438fd63462e78"
+    },
+    {
+      "file": "AZTEC3-linux.zip",
+      "bytes": 35518566,
+      "sha256": "4d0bea4dbfc4b371ccd110be3342cb4e87a34cf72a6661aa177a0f97bd7ada91",
+      "executable_sha256": "33c58cb07b5fc11d7b27aef0af4f7360ae1c8b84b9437718a06758ac6078783d"
+    }
+  ],
+  "web_sha256": {
+    "index.apple-touch-icon.png": "01d4f63e525941e06ce74f5187dad030d20a8d52a07ce365ae4e94af97a3b1f5",
+    "index.audio.position.worklet.js": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8",
+    "index.audio.worklet.js": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
+    "index.html": "870ecb7701a68d71c0798ed4e040111efef814ac548debf06084e7211c2d6ec6",
+    "index.icon.png": "ad3c35ad0facf487c618204bd98db543034fc95224eadc7f08c7a9ff38d5b3b5",
+    "index.js": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba",
+    "index.pck": "6fe959bd80b263a51994dc316d478768266e07a7f88c729bc36603c1c613e2bc",
+    "index.png": "3cb4495c0b98dfbe4b663cbf2b6836473572339beb66d902367893162a70be0e",
+    "index.wasm": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+  },
+  "limitations": [
+    "No first-time human playtest study; enjoyment, difficulty and duration not measured.",
+    "No mobile-device verification.",
+    "No standalone GDScript lint tool installed; Godot import/export parsing and warnings used for syntax/type checks.",
+    "Editor sandbox emitted certificate-store and editor-settings access warnings; native release checks passed outside the sandbox.",
+    "Browser storage may be evicted or blocked by settings; only tested origins and conditions are verified."
+  ],
+  "publication": {
+    "status": "pending_push",
+    "target": "https://kg-ninja.github.io/mayasensei/"
+  }
+}

@@ -1,89 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maya Mystery - Caracol</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div id="game-container">
-        <!-- 横スクロール可能な背景エリア -->
-        <div id="viewport">
-            <div id="game-world">
-                <!-- 背景画像はCSSで制御 -->
-
-                <!-- クリックポイント 1: 左の建物 -->
-                <div class="hotspot" id="hotspot-left" title="石造りの建物">
-                    <div class="pulse-ring"></div>
-                </div>
-
-                <!-- クリックポイント 2: 中央の石柱 -->
-                <div class="hotspot" id="hotspot-center" title="石柱">
-                    <div class="pulse-ring"></div>
-                </div>
-
-                <!-- クリックポイント 3: 右上の入口 -->
-                <div class="hotspot" id="hotspot-right" title="遺跡の入口">
-                    <div class="pulse-ring"></div>
-                </div>
-
-                <!-- クリックポイント 4: 内部の聖遺物 (初期は非表示) -->
-                <div class="hotspot hidden" id="hotspot-relic" title="聖遺物">
-                    <div class="pulse-ring"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- UI オーバーレイ -->
-        <div id="ui-layer">
-            <div id="coin-display">
-                <span class="coin-icon">🪙</span>
-                Coins: <span id="current-coins">0</span> / 3
-            </div>
-
-            <div id="inventory-bar">
-                <div class="slot" id="slot-0"></div>
-                <div class="slot" id="slot-1"></div>
-                <div class="slot" id="slot-2"></div>
-            </div>
-
-            <button id="enter-ruins-btn" class="hidden">遺跡内部へ進む</button>
-        </div>
-
-        <!-- モーダル / パズル UI -->
-        <div id="modal-overlay" class="hidden">
-            <div id="modal-container">
-                <!-- メッセージモーダル -->
-                <div id="modal-message" class="modal-content hidden">
-                    <p id="message-text"></p>
-                    <button class="close-modal-btn">閉じる</button>
-                </div>
-
-                <!-- パズルモーダル -->
-                <div id="modal-puzzle" class="modal-content hidden">
-                    <h2>マヤの試練</h2>
-                    <p>記号を正しい順番に並べよ</p>
-                    <div id="puzzle-board">
-                        <div class="puzzle-slot" data-index="0"></div>
-                        <div class="puzzle-slot" data-index="1"></div>
-                        <div class="puzzle-slot" data-index="2"></div>
-                        <div class="puzzle-slot" data-index="3"></div>
-                    </div>
-                    <div id="puzzle-pieces">
-                        <div class="piece" id="piece-sun" data-type="太陽">☀️</div>
-                        <div class="piece" id="piece-moon" data-type="月">🌙</div>
-                        <div class="piece" id="piece-star" data-type="星">⭐</div>
-                        <div class="piece" id="piece-snake" data-type="蛇">🐍</div>
-                    </div>
-                    <div class="puzzle-controls">
-                        <button id="check-puzzle-btn">確認</button>
-                        <button class="close-modal-btn">戻る</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="game.js"></script>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AZTEC3 — 翡翠の手帳と太陽の記憶</title>
+<meta name="description" content="3つの場所、3つの謎。チチェン・イッツァを舞台に、失われた一枚と人々の記録を読み解くパズルアドベンチャー。">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eee8d5;color:#284b42;font-family:system-ui,-apple-system,sans-serif;line-height:1.8}main{max-width:1080px;margin:0 auto;padding:64px 32px 40px}.eyebrow{letter-spacing:.15em;font-size:13px;color:#667465}h1{font-weight:500;font-size:clamp(60px,12vw,116px);line-height:1;margin:36px 0 28px;letter-spacing:.04em}h2{font-size:clamp(24px,4.5vw,38px);font-weight:500;margin:0 0 34px}p{max-width:670px}a{color:#365f50;text-underline-offset:4px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:36px 0}.actions a{display:inline-block;border:1px solid #a9b298;border-radius:7px;padding:13px 23px;text-decoration:none}.actions .play{background:#365f50;color:#fff4dc;font-weight:600}a:focus-visible{outline:3px solid #bb854d;outline-offset:5px}.details{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-top:1px solid #c4bea3;padding-top:26px;margin-top:50px}.details p{margin-top:5px;font-size:15px;color:#667465}footer{margin-top:42px;padding-top:20px;border-top:1px solid #c4bea3;font-size:13px;color:#667465}.small{font-size:14px;color:#667465}@media(max-width:650px){main{padding:32px 22px}.details{grid-template-columns:1fr;gap:9px}.actions a{width:100%;text-align:center}}
+</style></head>
+<body><main>
+<div class="eyebrow">FIELD NOTES / CHICHÉN ITZÁ</div>
+<h1>AZTEC3</h1><h2>翡翠の手帳と太陽の記憶</h2>
+<p>影ではなく、影が隠したものを読め。</p>
+<p>消えた最後の一枚。薄く残った数。逆さの写真。<br>資料修復士イネスと映像技師ハルが、3つの謎から人々の記録を取り戻す。</p>
+<div class="actions"><a class="play" href="web/">ブラウザーで手帳をひらく →</a><a href="downloads/AZTEC3-windows.zip">Windows版</a><a href="downloads/AZTEC3-linux.zip">Linux版</a></div>
+<p class="small">無料の3問体験版。PC向け。ブラウザー版は初回の読み込みに時間がかかります。</p>
+<div class="details"><div><strong>調べて、意味を見つける</strong><p>3つの場所を訪れ、会話と観察を手帳へ。理解したあとに戻ると、同じ資料の意味が変わります。</p></div><div><strong>自分のペースで</strong><p>制限時間や減点はありません。3段階のヒントと解説を用意し、途中から再開できます。</p></div><div><strong>証拠で、解釈を直す</strong><p>集めるのは宝石ではなく、確かめられる記録。最後にすべての証拠を結びつけます。</p></div></div>
+<footer>実在のマヤの都市を舞台にしたフィクション。AZTEC3は作品名です。<br><a href="https://github.com/KG-NINJA/mayasensei">操作説明・ソース</a> · <a href="legacy.html">旧作 Maya Mystery – Caracol</a> · <a href="licenses/Godot-LICENSE.txt">Godot MIT License</a> · <a href="licenses/NotoSansJP-OFL.txt">Font License</a></footer>
+</main></body></html>

@@ -1,0 +1,14 @@
+[
+  {
+    "file": "AZTEC3-windows.zip",
+    "bytes": 45086829,
+    "sha256": "a870ae69f5f28d98a7a37ab74769e7e6ccfa92f4cbde495ab8a29f017a034140",
+    "executable_sha256": "87415b89108ad4104aa12b9ca080bc7c195245a27526a9be299438fd63462e78"
+  },
+  {
+    "file": "AZTEC3-linux.zip",
+    "bytes": 35518566,
+    "sha256": "4d0bea4dbfc4b371ccd110be3342cb4e87a34cf72a6661aa177a0f97bd7ada91",
+    "executable_sha256": "33c58cb07b5fc11d7b27aef0af4f7360ae1c8b84b9437718a06758ac6078783d"
+  }
+]
