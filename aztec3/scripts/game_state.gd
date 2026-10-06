@@ -1,5 +1,6 @@
 extends RefCounted
 
+const Map = preload("res://scripts/field_map.gd")
 const Rules = preload("res://scripts/rules.gd")
 const OBSERVATIONS = ["notebook", "model", "ines", "board", "photo", "haru", "receipt", "page", "ines_tent"]
 const EVIDENCE = ["zero", "orientation", "receipt", "truth"]
@@ -78,6 +79,12 @@ static func valid(raw: Variant) -> bool:
 		return false
 	if not integer(raw.schema_version, 1, 1) or not raw.started is bool or not integer(raw.location, 0, 2) or not integer(raw.chapter, 0, 3):
 		return false
+	if raw.has("map_position"):
+		var position = raw.map_position
+		if not position is Array or position.size()!=2 or not integer(position[0],0,Map.COLS-1) or not integer(position[1],0,Map.ROWS-1):
+			return false
+		if not Map.walkable(Vector2i(int(position[0]),int(position[1]))):
+			return false
 	if not string_set(raw.observations, OBSERVATIONS) or not string_set(raw.evidence, EVIDENCE) or not string_set(raw.knowledge, ["zero", "orientation", "truth"]) or not string_set(raw.dialogue_flags, ["ines", "haru", "ines_tent"]):
 		return false
 	if not raw.log is Array or raw.log.size() > 80:
@@ -135,6 +142,8 @@ static func valid(raw: Variant) -> bool:
 
 static func canonical(raw: Dictionary) -> Dictionary:
 	var result = raw.duplicate(true)
+	if result.has("map_position"):
+		result.map_position=[int(result.map_position[0]),int(result.map_position[1])]
 	for key in ["schema_version", "location", "chapter"]:
 		result[key] = int(result[key])
 	for id in Rules.IDS:

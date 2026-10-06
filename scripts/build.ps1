@@ -45,6 +45,11 @@ try {
     if (-not $adventureMatch.Success) { throw 'Adventure completion marker missing' }
     $adventureReport = $adventureMatch.Groups[1].Value | ConvertFrom-Json
     if ($adventureReport.failures.Count -ne 0) { throw ($adventureReport.failures -join '; ') }
+    $explorationLog = Invoke-CheckedGodot @('--script','res://tests/exploration.gd') 'exploration'
+    $explorationMatch = [regex]::Match($explorationLog,'AZTEC3_EXPLORATION (\{[^\r\n]+\})')
+    if (-not $explorationMatch.Success) { throw 'Exploration completion marker missing' }
+    $explorationReport = $explorationMatch.Groups[1].Value | ConvertFrom-Json
+    if ($explorationReport.failures.Count -ne 0) { throw ($explorationReport.failures -join '; ') }
     Invoke-CheckedGodot @('--export-release','Web',(Join-Path $workRoot 'web/index.html')) 'export-web' | Out-Null
     Invoke-CheckedGodot @('--export-release','Windows',(Join-Path $workRoot 'build/windows/AZTEC3.exe')) 'export-windows' | Out-Null
     Invoke-CheckedGodot @('--export-release','Linux',(Join-Path $workRoot 'build/linux/AZTEC3.x86_64')) 'export-linux' | Out-Null

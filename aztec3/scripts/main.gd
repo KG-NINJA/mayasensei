@@ -1,5 +1,7 @@
 extends Control
 
+const FieldMap = preload("res://scripts/field_map.gd")
+const InspectionScene = preload("res://scripts/inspection_scene.gd")
 const Story = preload("res://scripts/story.gd")
 const State = preload("res://scripts/game_state.gd")
 const Save = preload("res://scripts/save_service.gd")
@@ -24,6 +26,10 @@ var saver = Save.new()
 var layer: Control
 var view = "title"
 var previous_view = "explore"
+var map_cell = Vector2i(4,5)
+var map_initialized = false
+var scene_actor = Vector2(660,685)
+var field_map: Control
 var story_step = 0
 var selected = -1
 var overlay = false
@@ -171,6 +177,7 @@ func render() -> void:
 	match view:
 		"title": render_title()
 		"explore": render_explore()
+		"map": render_map()
 		"puzzle": render_puzzle()
 		"notebook": render_notebook(false)
 		"log": render_notebook(true)
@@ -232,6 +239,8 @@ func render_restart() -> void:
 	button("今の手帳へ戻る",Rect2(263,407,339,58),func(): view="title"; render())
 	button("新しい手帳で始める",Rect2(623,407,339,58),func():
 		state.data = State.fresh()
+		map_initialized=false
+		scene_actor=Vector2(660,685)
 		speech = "展示の準備を始めましょう。手帳と模型を調べてから、私に声をかけて。"
 		speaker = "イネス"
 		start_game(),true)
@@ -239,41 +248,95 @@ func render_restart() -> void:
 func render_explore() -> void:
 	var location = int(state.data.location)
 	var id = Rules.IDS[location]
-	header("翡翠の手帳と太陽の記憶　　%02d / 03 記録を理解" % state.data.chapter)
+	header(LOCATIONS[location]+"　 /　ポイント＆クリック調査")
+	var scene = InspectionScene.new()
+	scene.position=Vector2(28,88)
+	scene.size=Vector2(815,459)
+	scene.location=location
+	scene.font=FONT
+	scene.names=OBS_NAMES[location]
+	scene.markers=state.data.settings.hotspots
+	scene.actor=scene_actor
+	scene.target=scene_actor
 	for i in range(3):
-		button("%02d  %s" % [i+1,LOCATIONS[i]],Rect2(28+i*276,88,263,42),func():
-			state.data.location=i
-			speaker="手帳"
-			speech=DESCRIPTIONS[i]
-			persist()
-			render(),i==location,not state.accessible(i))
-	illustration(Rect2(28,144,815,385),location)
-	if state.data.settings.hotspots:
-		var positions = [[Vector2(230,472),Vector2(478,470),Vector2(760,454)],[Vector2(185,449),Vector2(495,458),Vector2(758,475)],[Vector2(676,471),Vector2(619,327),Vector2(254,412)]][location]
-		for i in range(3):
-			button(str(i+1),Rect2(positions[i]-Vector2(19,19),Vector2(38,38)),func(): inspect(i))
-	panel(Rect2(864,88,388,441))
-	label("調査 %02d　/　%s" % [location+1,LOCATIONS[location]],Rect2(889,109,335,39),20)
+		scene.visited[i]=OBS[location][i] in state.data.observations
+	scene.walked.connect(func(point: Vector2): scene_actor=point)
+	scene.inspected.connect(inspect)
+	layer.add_child(scene)
+	panel(Rect2(864,88,388,459))
+	label("調査 %02d　/　%s" % [location+1,LOCATIONS[location]],Rect2(889,104,335,39),20)
 	var observed = 0
 	for item in OBS[location]:
 		if item in state.data.observations:
 			observed += 1
-	label(Story.objective(location,observed,state.complete(id)),Rect2(889,153,332,73),16,MUTED)
+	label(Story.objective(location,observed,state.complete(id)),Rect2(889,146,332,64),16,MUTED)
 	for i in range(3):
 		var mark = "✓ " if OBS[location][i] in state.data.observations else "%d  " % (i+1)
-		button(mark+OBS_NAMES[location][i],Rect2(889,233+i*59,338,47),func(): inspect(i))
-	button("解読の記録を見る" if state.complete(id) else "資料を読み解く →",Rect2(889,426,338,58),open_puzzle,true,not state.ready_for(id))
-	label("調べていない手掛かりも、いつでも再訪できます。",Rect2(890,489,335,28),13,MUTED)
-	panel(Rect2(28,547,815,135))
-	label(speaker,Rect2(49,560,761,30),18,GOLD)
-	label(speech,Rect2(49,596,762,76),18,INK)
-	button("手帳 / 証拠 %d" % state.data.evidence.size(),Rect2(864,547,187,53),func(): open_notebook(false))
-	button("会話ログ",Rect2(1064,547,188,53),func(): open_notebook(true))
-	button("調査点：表示" if state.data.settings.hotspots else "調査点：非表示",Rect2(864,613,187,53),func(): state.data.settings.hotspots=not state.data.settings.hotspots; persist(); render())
-	if state.complete(id) and location < 2:
-		button("次の場所へ →",Rect2(1064,613,188,53),func(): enter_chapter(location+1),true)
-	elif state.complete("p003"):
-		button("結末を読む",Rect2(1064,613,188,53),func(): view="ending"; render(),true)
+		button(mark+OBS_NAMES[location][i],Rect2(889,219+i*47,338,40),func(): inspect(i))
+	button("解読の記録を見る" if state.complete(id) else "資料を読み解く →",Rect2(889,363,338,48),open_puzzle,true,not state.ready_for(id))
+	button("遺跡マップへ",Rect2(889,420,163,43),open_map)
+	button("調査点：表示" if state.data.settings.hotspots else "調査点：非表示",Rect2(1063,420,164,43),func(): state.data.settings.hotspots=not state.data.settings.hotspots; persist(); render())
+	button("手帳 / 証拠 %d" % state.data.evidence.size(),Rect2(889,484,163,43),func(): open_notebook(false))
+	button("結末を読む" if state.complete("p003") else "会話ログ",Rect2(1063,484,164,43),func():
+		if state.complete("p003"):
+			view="ending"; render()
+		else:
+			open_notebook(true))
+	panel(Rect2(28,562,1224,119))
+	label(speaker,Rect2(49,571,1160,28),17,GOLD)
+	label(speech,Rect2(49,602,1160,72),18,INK)
+
+func open_map() -> void:
+	if not map_initialized:
+		var saved_position = state.data.get("map_position",[])
+		map_cell=Vector2i(int(saved_position[0]),int(saved_position[1])) if saved_position.size()==2 else FieldMap.DOORS[int(state.data.location)]+Vector2i.DOWN
+		map_initialized=true
+	view="map"
+	render()
+
+func enter_from_map(location: int) -> void:
+	if not state.accessible(location):
+		return
+	state.data.location=location
+	scene_actor=Vector2(660,685)
+	speaker="手帳"
+	speech=DESCRIPTIONS[location]
+	var unseen = true
+	for item in OBS[location]:
+		if item in state.data.observations:
+			unseen=false
+	view="chapter" if unseen else "explore"
+	story_step=0
+	persist()
+	render()
+
+func render_map() -> void:
+	header("遺跡を歩く　 /　見下ろしマップ")
+	field_map=FieldMap.new()
+	field_map.position=Vector2(28,104)
+	field_map.size=Vector2(968,528)
+	field_map.cell=map_cell
+	field_map.font=FONT
+	field_map.focus_mode=Control.FOCUS_ALL
+	for i in range(3):
+		field_map.unlocked[i]=state.accessible(i)
+	field_map.moved.connect(func(point: Vector2i):
+		map_cell=point
+		state.data["map_position"]=[point.x,point.y]
+		persist())
+	field_map.entered.connect(enter_from_map)
+	var notice = label("入口へ歩き、Enterで中へ。",Rect2(29,644,966,41),18,MUTED)
+	field_map.message.connect(func(text: String): notice.text=text)
+	layer.add_child(field_map)
+	panel(Rect2(1016,104,236,528))
+	label("フィールドノート",Rect2(1032,118,203,35),20)
+	label("矢印 / WASD：歩く\nクリック：目的地へ\nEnter：近くの入口\n木・建物・池は通れません。",Rect2(1032,164,201,107),16,MUTED)
+	for i in range(3):
+		button("%02d %s" % [i+1,["資料室へ歩く","神殿前へ歩く","テントへ歩く"][i]],Rect2(1032,286+i*50,204,42),func(): field_map.destination(FieldMap.DOORS[i]); field_map.grab_focus())
+	button("建物に入る",Rect2(1032,447,204,46),func(): field_map.enter_nearby(),true)
+	button("手帳をひらく",Rect2(1032,507,204,42),func(): open_notebook(false))
+	button("調査へ戻る",Rect2(1032,566,204,42),back)
+	field_map.call_deferred("focus_if_attached")
 
 func inspect(index: int) -> void:
 	var location = int(state.data.location)
@@ -460,6 +523,7 @@ func render_result() -> void:
 			view="ending"
 		else:
 			state.data.location=Rules.IDS.find(puzzle_id)+1
+			scene_actor=Vector2(660,685)
 			view="chapter"
 			story_step=0
 			speaker="手帳"
@@ -546,6 +610,8 @@ func back() -> void:
 		view=previous_view
 	elif view=="reveal_confirm":
 		view="puzzle"
+	elif view=="map":
+		view="explore"
 	elif view=="chapter":
 		skip_story()
 		return
@@ -560,12 +626,13 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		if event.keycode==KEY_ESCAPE:
 			back()
 			get_viewport().set_input_as_handled()
-		elif event.keycode==KEY_N and view in ["explore","puzzle","result"]:
+		elif event.keycode==KEY_N and view in ["explore","puzzle","result","map"]:
 			open_notebook(false)
 			get_viewport().set_input_as_handled()
 
 
 func enter_chapter(location: int) -> void:
+	scene_actor=Vector2(660,685)
 	state.data.location=location
 	story_step=0
 	view="chapter"
