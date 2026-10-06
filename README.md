@@ -1,8 +1,14 @@
 # AZTEC3 — 翡翠の手帳と太陽の記憶
 
-チチェン・イッツァを舞台にした、Godot製のオリジナル・パズルアドベンチャー。3か所・3問の体験版です。資料を観察し、人物と話し、証拠を結びつけて展示の誤解を解きます。
+チチェン・イッツァを舞台にした、Godot製のオリジナル・パズルアドベンチャー。全3章・3か所・3問で結末まで遊べる短編です。資料を観察し、人物と話し、証拠を結びつけて展示の誤解を解きます。
 
 **[ブラウザーで遊ぶ](https://kg-ninja.github.io/mayasensei/web/)** · **[Windows版](https://kg-ninja.github.io/mayasensei/downloads/AZTEC3-windows.zip)** · **[Linux版](https://kg-ninja.github.io/mayasensei/downloads/AZTEC3-linux.zip)**
+
+公開Web版とLinux版は今回の更新版です。Windowsの公開ZIPは以前の3問体験版です（今回のWindowsビルドはローカルで作成済みですが、アップロード経路のファイルサイズ制限で更新できていません）。
+
+## 物語と調査
+
+各章の会話から調査を始め、3つの手掛かりを観察すると謎が開きます。事件の手帳は未解決の問いと、証拠から分かった答えを整理します。会話はスキップでき、後からログで再読できます。解答表示には確認があり、取り消して自分で考え続けられます。既存のv1セーブはそのまま利用できます。
 
 ## 遊び方
 
@@ -16,7 +22,7 @@ PC版はZIPを展開して実行します。Linuxで実行権限が保持され�
 
 ## 実装・再ビルド
 
-Godot **4.7.2 Standard / GDScript / Compatibility**。Webは単一スレッド・WebGL 2.0。実行時の有料API・会話AI・オンライン問題生成・アカウントは使いません。音も画面情報を読むための必須条件ではありません。
+Godot **4.6.3 Standard / GDScript / Compatibility**。Webは単一スレッド・WebGL 2.0。実行時の有料API・会話AI・オンライン問題生成・アカウントは使いません。音も画面情報を読むための必須条件ではありません。
 
 `aztec3/project.godot` をGodotで開き、実行できます。3問のResource定義は `aztec3/content/`、正解判定は `scripts/rules.gd`、進行と保存は `game_state.gd`・`save_service.gd`。セーブは `user://aztec3-v1.json` と直前の正常データ `.bak` です。
 
@@ -24,13 +30,14 @@ Godot **4.7.2 Standard / GDScript / Compatibility**。Webは単一スレッド�
 # 標準のエクスポートテンプレートを導入済みの場合
 ./scripts/build.ps1 -Godot 'C:/path/to/godot.exe' -Python python
 # Steam同梱など別のテンプレートを指定する場合
-./scripts/build.ps1 -Godot 'C:/path/to/godot.exe' -TemplatesDirectory 'C:/path/to/4.7.2.stable' -Python python
+./scripts/build.ps1 -Godot 'C:/path/to/godot.exe' -TemplatesDirectory 'C:/path/to/4.6.3.stable' -Python python
 ```
 
 スクリプトはインポート・型/構文解析・回帰検証・Web/Windows/Linuxの書き出し・ZIPのCRC確認を行います。指定したテンプレートパスは終了時に設定から戻します。
 
 ```text
 godot --headless --path aztec3 --script res://tests/run.gd
+godot --headless --path aztec3 --script res://tests/adventure.gd
 AZTEC3.exe --headless -- --verify
 AZTEC3.x86_64 --headless -- --verify
 ```
@@ -41,7 +48,7 @@ Webは `python -m http.server 4190` 等でリポジトリのルートから配�
 
 ## 検証と範囲
 
-検証記録は [docs/verification.json](https://github.com/KG-NINJA/mayasensei/blob/maya-mystery-caracol-4369826665362574781/docs/verification.json)。ソースの検証と配布ビルドの実行、目視確認、公開確認を分けて記録します。初見5人によるプレイテストは未実施で、面白さ・難度・所要時間を実測済みとは扱いません。18問の本編とスマートフォン実機対応は含みません。
+今回の検証記録は [docs/adventure-verification.json](docs/adventure-verification.json)。以前の配布版の検証は [docs/verification.json](https://github.com/KG-NINJA/mayasensei/blob/maya-mystery-caracol-4369826665362574781/docs/verification.json)。ソースの検証と配布ビルドの実行、目視確認、公開確認を分けて記録します。初見5人によるプレイテストは未実施で、面白さ・難度・所要時間を実測済みとは扱いません。18問の本編とスマートフォン実機対応は含みません。
 
 背景・人物・図版・音は本作用のオリジナル。チチェン・イッツァはマヤの都市であり、AZTEC3は作品名です。登場人物・事件・施設・手帳・図版は創作で、実在の装置や測量結果ではありません。[史実の参照先](https://github.com/KG-NINJA/mayasensei/blob/maya-mystery-caracol-4369826665362574781/docs/historical_sources.md) · [素材台帳](https://github.com/KG-NINJA/mayasensei/blob/maya-mystery-caracol-4369826665362574781/docs/asset_licenses.csv) · [Godotとフォントのライセンス](https://github.com/KG-NINJA/mayasensei/tree/maya-mystery-caracol-4369826665362574781/licenses/)
 
