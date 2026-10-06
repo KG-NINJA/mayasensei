@@ -10,6 +10,12 @@
 
 各章の会話から調査を始め、3つの手掛かりを観察すると謎が開きます。事件の手帳は未解決の問いと、証拠から分かった答えを整理します。会話はスキップでき、後からログで再読できます。解答表示には確認があり、取り消して自分で考え続けられます。既存のv1セーブはそのまま利用できます。
 
+## 2つの探索場面
+
+調査画面では背景内の手帳・展示物・人物を直接クリックすると、主人公が近づいて観察や会話を行います。調査点を非表示にしても対象はクリックできます。右側のボタンでも同じ調査ができ、キーボード操作にも対応します。
+
+「遺跡マップへ」で見下ろし型フィールドに出ます。矢印キー／WASDで歩くか、道・草地をクリックして障害物を避けて移動。入口に近づき、Enterまたは「建物に入る」で調査場面へ入れます。建物・池は通れません。前の謎を解くと次の入口が開き、訪問済みの場所にも戻れます。マップ位置も自動保存し、旧セーブはそのまま読み込めます。
+
 ## 遊び方
 
 - クリック／タップで調査。Tabで選択、Enter／Spaceで決定。Nで手帳、Escで戻る。
@@ -38,6 +44,7 @@ Godot **4.6.3 Standard / GDScript / Compatibility**。Webは単一スレッド�
 ```text
 godot --headless --path aztec3 --script res://tests/run.gd
 godot --headless --path aztec3 --script res://tests/adventure.gd
+godot --headless --path aztec3 --script res://tests/exploration.gd
 AZTEC3.exe --headless -- --verify
 AZTEC3.x86_64 --headless -- --verify
 ```
@@ -48,7 +55,7 @@ Webは `python -m http.server 4190` 等でリポジトリのルートから配�
 
 ## 検証と範囲
 
-今回の検証記録は [docs/adventure-verification.json](docs/adventure-verification.json)。以前の配布版の検証は [docs/verification.json](https://github.com/KG-NINJA/mayasensei/blob/maya-mystery-caracol-4369826665362574781/docs/verification.json)。ソースの検証と配布ビルドの実行、目視確認、公開確認を分けて記録します。初見5人によるプレイテストは未実施で、面白さ・難度・所要時間を実測済みとは扱いません。18問の本編とスマートフォン実機対応は含みません。
+今回の探索場面の検証は [docs/exploration-verification.json](docs/exploration-verification.json)。前回の物語更新は [docs/adventure-verification.json](docs/adventure-verification.json)。以前の配布版の検証は [docs/verification.json](https://github.com/KG-NINJA/mayasensei/blob/maya-mystery-caracol-4369826665362574781/docs/verification.json)。ソースの検証と配布ビルドの実行、目視確認、公開確認を分けて記録します。初見5人によるプレイテストは未実施で、面白さ・難度・所要時間を実測済みとは扱いません。18問の本編とスマートフォン実機対応は含みません。
 
 背景・人物・図版・音は本作用のオリジナル。チチェン・イッツァはマヤの都市であり、AZTEC3は作品名です。登場人物・事件・施設・手帳・図版は創作で、実在の装置や測量結果ではありません。[史実の参照先](https://github.com/KG-NINJA/mayasensei/blob/maya-mystery-caracol-4369826665362574781/docs/historical_sources.md) · [素材台帳](https://github.com/KG-NINJA/mayasensei/blob/maya-mystery-caracol-4369826665362574781/docs/asset_licenses.csv) · [Godotとフォントのライセンス](https://github.com/KG-NINJA/mayasensei/tree/maya-mystery-caracol-4369826665362574781/licenses/)
 
