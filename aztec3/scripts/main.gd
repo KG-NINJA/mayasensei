@@ -1,5 +1,6 @@
 extends Control
 
+const Story = preload("res://scripts/story.gd")
 const State = preload("res://scripts/game_state.gd")
 const Save = preload("res://scripts/save_service.gd")
 const Rules = preload("res://scripts/rules.gd")
@@ -23,6 +24,7 @@ var saver = Save.new()
 var layer: Control
 var view = "title"
 var previous_view = "explore"
+var story_step = 0
 var selected = -1
 var overlay = false
 var feedback = ""
@@ -175,6 +177,8 @@ func render() -> void:
 		"result": render_result()
 		"ending": render_ending()
 		"restart": render_restart()
+		"chapter": render_chapter()
+		"reveal_confirm": render_reveal_confirm()
 	status_label = label(status,Rect2(30,694,990,24),14,Color("79674b"))
 	label("クリック / Tab・Enter　｜　N 手帳　Esc 戻る",Rect2(899,695,367,21),13,MUTED)
 	var focus: Button = null
@@ -211,6 +215,9 @@ func start_game() -> void:
 	if not music.playing and music.stream:
 		music.play()
 	view = "ending" if state.complete("p003") else "explore"
+	if state.data.observations.is_empty():
+		view = "chapter"
+		story_step = 0
 	if not state.data.log.is_empty():
 		speech = state.data.log[-1]
 		speaker = "前回の記録"
@@ -247,7 +254,11 @@ func render_explore() -> void:
 			button(str(i+1),Rect2(positions[i]-Vector2(19,19),Vector2(38,38)),func(): inspect(i))
 	panel(Rect2(864,88,388,441))
 	label("調査 %02d　/　%s" % [location+1,LOCATIONS[location]],Rect2(889,109,335,39),20)
-	label("解読済み。再調査で意味を確かめよう。" if state.complete(id) else "3つの手掛かりを集め、資料を読み解く。",Rect2(889,160,332,57),17,MUTED)
+	var observed = 0
+	for item in OBS[location]:
+		if item in state.data.observations:
+			observed += 1
+	label(Story.objective(location,observed,state.complete(id)),Rect2(889,153,332,73),16,MUTED)
 	for i in range(3):
 		var mark = "✓ " if OBS[location][i] in state.data.observations else "%d  " % (i+1)
 		button(mark+OBS_NAMES[location][i],Rect2(889,233+i*59,338,47),func(): inspect(i))
@@ -260,7 +271,7 @@ func render_explore() -> void:
 	button("会話ログ",Rect2(1064,547,188,53),func(): open_notebook(true))
 	button("調査点：表示" if state.data.settings.hotspots else "調査点：非表示",Rect2(864,613,187,53),func(): state.data.settings.hotspots=not state.data.settings.hotspots; persist(); render())
 	if state.complete(id) and location < 2:
-		button("次の場所へ →",Rect2(1064,613,188,53),func(): state.data.location=location+1; speaker="手帳"; speech=DESCRIPTIONS[location+1]; persist(); render(),true)
+		button("次の場所へ →",Rect2(1064,613,188,53),func(): enter_chapter(location+1),true)
 	elif state.complete("p003"):
 		button("結末を読む",Rect2(1064,613,188,53),func(): view="ending"; render(),true)
 
@@ -330,7 +341,7 @@ func render_puzzle() -> void:
 	hint_box.focus_mode=Control.FOCUS_ALL
 	layer.add_child(hint_box)
 	button("ヒント %d / 3" % puzzle.hints,Rect2(891,462,306,46),use_hint,false,puzzle.hints>=3)
-	button("解答と解説を見る",Rect2(891,523,306,46),reveal_solution)
+	button("解答と解説を見る",Rect2(891,523,306,46),func(): view="reveal_confirm"; render())
 	if puzzle_id == "p001":
 		render_placement(puzzle.board)
 	elif puzzle_id == "p002":
@@ -449,7 +460,8 @@ func render_result() -> void:
 			view="ending"
 		else:
 			state.data.location=Rules.IDS.find(puzzle_id)+1
-			view="explore"
+			view="chapter"
+			story_step=0
 			speaker="手帳"
 			speech=DESCRIPTIONS[int(state.data.location)]
 		persist()
@@ -480,6 +492,11 @@ func render_notebook(logs: bool) -> void:
 		for item in state.data.log:
 			notebook_line(column,item,20)
 	else:
+		notebook_line(column,"事件の手帳 — 未解決の謎",25)
+		for i in range(3):
+			var solved = state.complete(Rules.IDS[i])
+			var answers = ["貝形は空白ではなく0。遺物の持出数はゼロ。", "写真は180度逆さ。影に隠れたB欄は地域協力者。", "最後の一枚は棚2で乾燥されていた。展示に名前を戻す。"]
+			notebook_line(column,("解決　" if solved else "未解決　")+Story.CHAPTERS[i].question+"\n"+(answers[i] if solved else "資料を調べ、証拠から答えを確かめよう。"),19)
 		notebook_line(column,"観察済み %d / 9　　理解済み %d / 3\n調べただけの記録と、照合して理解した記録は別に残ります。" % [state.data.observations.size(),state.data.chapter],18)
 		for id in state.data.evidence:
 			if id=="receipt":
@@ -527,6 +544,11 @@ func toggle_sound() -> void:
 func back() -> void:
 	if view in ["notebook","log"]:
 		view=previous_view
+	elif view=="reveal_confirm":
+		view="puzzle"
+	elif view=="chapter":
+		skip_story()
+		return
 	elif view in ["puzzle","result","ending"]:
 		view="explore"
 	else:
@@ -541,3 +563,59 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		elif event.keycode==KEY_N and view in ["explore","puzzle","result"]:
 			open_notebook(false)
 			get_viewport().set_input_as_handled()
+
+
+func enter_chapter(location: int) -> void:
+	state.data.location=location
+	story_step=0
+	view="chapter"
+	persist()
+	render()
+
+func render_chapter() -> void:
+	var location = int(state.data.location)
+	var chapter = Story.CHAPTERS[location]
+	var line = chapter.lines[story_step]
+	illustration(Rect2(0,0,1280,720),location)
+	panel(Rect2(48,39,1184,96),Color(0.97,0.94,0.85,0.97))
+	label(chapter.title,Rect2(78,51,1040,49),32)
+	label(LOCATIONS[location]+"　 /　"+chapter.question,Rect2(80,101,1050,29),17,MUTED)
+	panel(Rect2(48,436,1184,239),Color(0.97,0.94,0.85,0.98))
+	label(line[0],Rect2(80,455,1025,34),22,GOLD)
+	label(line[1],Rect2(80,504,1080,88),24)
+	label("%d / %d" % [story_step+1,chapter.lines.size()],Rect2(80,622,140,30),17,MUTED)
+	button("調査を始める →" if story_step==chapter.lines.size()-1 else "会話を進める →",Rect2(883,610,315,48),advance_story,true)
+	button("会話を閉じて調査",Rect2(624,610,241,48),skip_story)
+
+func advance_story() -> void:
+	var chapter = Story.CHAPTERS[int(state.data.location)]
+	var line = chapter.lines[story_step]
+	state.add_log(line[0]+"："+line[1])
+	if story_step < chapter.lines.size()-1:
+		story_step += 1
+	else:
+		view="explore"
+		speaker="手帳"
+		speech=chapter.question
+	persist()
+	render()
+
+func render_reveal_confirm() -> void:
+	header("解答を見る前に")
+	panel(Rect2(220,174,840,364))
+	label("この謎の解答をひらきますか？",Rect2(258,212,760,58),30)
+	label("解答と理由を記録し、物語を先へ進めます。\n手帳には「解答を見て理解」と残ります。\n自分で考えたいときは、戻ってヒントを使えます。",Rect2(258,295,760,116),21,MUTED)
+	button("謎に戻る",Rect2(258,446,339,54),func(): view="puzzle"; render())
+	button("解答を読んで進む",Rect2(622,446,339,54),reveal_solution,true)
+
+
+func skip_story() -> void:
+	var chapter = Story.CHAPTERS[int(state.data.location)]
+	for i in range(story_step,chapter.lines.size()):
+		var line = chapter.lines[i]
+		state.add_log(line[0]+"："+line[1])
+	view="explore"
+	speaker="手帳"
+	speech=chapter.question
+	persist()
+	render()

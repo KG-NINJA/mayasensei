@@ -18,6 +18,8 @@ func run(target: Control) -> void:
 		await capture("title-"+str(dimensions.x))
 		await press("手帳をひらく")
 		for stage in range(3):
+			await capture("chapter-%d-%d" % [stage,dimensions.x])
+			await press("会話を閉じて調査")
 			await capture("explore-%d-%d" % [stage,dimensions.x])
 			for i in range(3):
 				game.inspect(i)
@@ -34,6 +36,7 @@ func run(target: Control) -> void:
 			await capture("notebook-%d-%d" % [stage,dimensions.x])
 			game.back()
 			await press("解答と解説を見る")
+			await press("解答を読んで進む")
 			await capture("result-%d-%d" % [stage,dimensions.x])
 			await press("記録を結末へ" if stage==2 else "次の場所へ →")
 		if game.view!="ending" or not game.state.complete("p003"):

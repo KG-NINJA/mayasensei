@@ -1,0 +1,69 @@
+{
+  "checked_at_utc": "2026-10-06",
+  "scope": "Three-chapter original adventure polish",
+  "engine": "4.6.3.stable",
+  "source_regression": {
+    "checks": 126,
+    "failures": []
+  },
+  "adventure_flow": {
+    "checks": 30,
+    "failures": []
+  },
+  "linux_release": {
+    "checks": 126,
+    "failures": []
+  },
+  "browser": {
+    "engine": "Chromium 151 headless / SwiftShader",
+    "viewport": [
+      1280,
+      720
+    ],
+    "all_three_solved_through_clicks": true,
+    "reload_resumed_ending": true,
+    "page_errors": [],
+    "visual_evidence": [
+      "screenshots/chapter.png",
+      "screenshots/ending.png"
+    ]
+  },
+  "release_files": [
+    {
+      "file": "AZTEC3-windows.zip",
+      "bytes": 45086829,
+      "sha256": "a870ae69f5f28d98a7a37ab74769e7e6ccfa92f4cbde495ab8a29f017a034140",
+      "executable_sha256": "87415b89108ad4104aa12b9ca080bc7c195245a27526a9be299438fd63462e78"
+    },
+    {
+      "file": "AZTEC3-linux.zip",
+      "bytes": 34355448,
+      "sha256": "3a3b64bc304523f3af946fd6053260bb39816c3494a30db0d8ccb3bf5315631a",
+      "executable_sha256": "5b5dbaf881e143f5e104d9043fd00045d21a4e0eb1cbd0ea7bcbaec2d87b2081"
+    }
+  ],
+  "web_sha256": {
+    "web/index.pck": "21cf48f1a08f7fffa307a0938a8d07c8ded13d3ee9096b6d9a33cf4d9724b6ae",
+    "web/index.apple-touch-icon.png": "9b374ecbc8558f480421e646f38aaa8a69d5b1d65ff7b48d0735da214c46773a",
+    "web/index.audio.position.worklet.js": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8",
+    "web/index.audio.worklet.js": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
+    "web/index.png": "3cb4495c0b98dfbe4b663cbf2b6836473572339beb66d902367893162a70be0e",
+    "web/index.html": "7f30e4523528664bc43e5fd760f2fb832921eb54283157a1efada7c93744d24c",
+    "web/index.icon.png": "08808dd5397e9a502cb3624944151f87a9705b5b66b5c365c5ca4c6ab51525f5",
+    "web/index.wasm": "26b61ce95247012ab3dca3ff51e96d1cdbff44ee91a8c20a83e150afca83f1b6",
+    "web/index.js": "e3f56ee40e6f84371053db06692cfac15e2c8659547b11c6b2dfa1996dabd981"
+  },
+  "limitations": [
+    "Windows export and archive CRC checked; executable not run on Windows.",
+    "No mobile device or first-time human playtest.",
+    "Editor settings save warnings in sandbox; exports completed without script/parse errors.",
+    "Occasional headless audio teardown resource warning; all progression assertions passed.",
+    "Windows rebuilt locally but upload API rejected its size; published Windows archive remains previous release."
+  ],
+  "previous_verification": "verification.json records the earlier release; use this file for this change.",
+  "web_release": {
+    "checks": 126,
+    "failures": [],
+    "observed": "Chromium console AZTEC3_VERIFY; document.title remained unchanged on Godot 4.6.3"
+  }
+}
