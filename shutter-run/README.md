@@ -32,8 +32,11 @@ GitHub Pagesは静的配信のためAPIキーやサーバーを持ちません�
 
 ```sh
 node shutter-run/tests/run.mjs
+node shutter-run/tests/server.mjs
 ```
 
 80コースでローカル参考操縦の完走、加速、シード再現、無入力時の接触、すり抜け防止、公式Decisionsリクエスト・応答形式を検証。モック応答はテストでのみ使用します。実APIの成績・判断時間はAPIキー接続後に実測してください。APIの優位性を事前に実測済みとは扱いません。
 
 [Decisions API公式仕様](https://developers.openai.com/api/docs/guides/decisions)
+
+サーバーは設定ポートのlocalhost / 127.0.0.1のHostだけを受け付け、Originも固定のlocalhost originsと明示したALLOWED_ORIGINで照合します。HostやX-Forwarded-Hostから許可originを作りません。ALLOWED_ORIGINはパス・末尾スラッシュ・認証情報を含まない正確なHTTP(S) originを指定してください。リバースプロキシを使う場合もバックエンドのHostを上記の固定値に設定してください。サーバーテストではDNS rebinding相当の不正ヘッダー36ケースを検証し、実API呼び出しは行いません。
