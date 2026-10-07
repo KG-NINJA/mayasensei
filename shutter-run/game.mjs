@@ -1,5 +1,5 @@
-import {createWarning} from './voice.mjs';
-import {Run,GATE_COUNT,W,H,SHIP_Y,RADIUS,LANES,SHIP_SPEED,clamp,gapWidth} from './physics.mjs';
+import {createWarning} from './voice.mjs?v=stage52';
+import {Run,GATE_COUNT,W,H,SHIP_Y,RADIUS,LANES,SHIP_SPEED,clamp,gapWidth} from './physics.mjs?v=stage52';
 const warning=createWarning(window.speechSynthesis,window.SpeechSynthesisUtterance);
 const $=id=>document.getElementById(id),canvas=$('canvas'),ctx=canvas.getContext('2d');
 let mode='manual',run=null,active=false,paused=false,available=false,keys=new Set(),drag=false,pointerId=null,lastPointerX=null,pointerX=null,previous=performance.now(),accumulator=0,lastPoll=0,pending=false,epoch=0,abort=null,apiCount=0,times=[],probabilities=[],plans=new Map(),decision='',sound=false,audio=null,done=false,results=[];
