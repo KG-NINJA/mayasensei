@@ -1,16 +1,16 @@
 # SHUTTER RUN — 加速する最終回廊
 
-閉まる26枚のシャッターを避ける、オリジナルの縦スクロール脱出ゲーム。沙羅曼蛇の最終脱出場面の緊張感を参考に、素材・機体・コース・音は本作のオリジナルとして実装しています。
+閉まる52枚のシャッターを避ける、オリジナルの縦スクロール脱出ゲーム。沙羅曼蛇の最終脱出場面の緊張感を参考に、素材・機体・コース・音は本作のオリジナルとして実装しています。
 
 ## テストプレイ
 
 公開ページ: https://kg-ninja.github.io/mayasensei/shutter-run/
 
 - 手動操縦: ← → / A D。タッチ・マウスではゲーム画面の好きな位置を左右にドラッグ。触れた位置に機体は飛ばず、指の移動量で操縦できます。Spaceで一時停止、Rで再挑戦。
-- RAPIDは210 px/sから毎秒36 px/sずつ加速し、終盤は1,000 px/s超。NORMALは練習用の加速コース。
+- RAPIDは210 px/sから毎秒36 px/sずつ加速し、終盤は約1,440 px/s。NORMALは練習用の加速コース。
 - 同じSEEDとコースでは、手動・実API・ローカル参考操縦が同じシャッター配置・速度・移動速度・当たり判定を使用。
-- ブラウザーの「API接続・動作確認」内のローカル参考操縦は、画面の動作確認用。実APIとして表示・集計しません。
-- 隠れたタブやフォーカスを失ったときは一時停止。再開はボタンまたはSpace。
+- モード選択の「AIなし自動デモ」は、画面の動作確認用。実APIとして表示・集計しません。
+- 別タブや別アプリへ切り替えて非表示になったときは一時停止。フォーカス変化では停止しません。再開はボタンまたはSpace。
 
 ## 実Decisions APIを接続する
 
@@ -33,6 +33,7 @@ GitHub Pagesは静的配信のためAPIキーやサーバーを持ちません�
 ```sh
 node shutter-run/tests/run.mjs
 node shutter-run/tests/server.mjs
+node shutter-run/tests/voice.mjs
 ```
 
 80コースでローカル参考操縦の完走、加速、シード再現、無入力時の接触、すり抜け防止、公式Decisionsリクエスト・応答形式を検証。モック応答はテストでのみ使用します。実APIの成績・判断時間はAPIキー接続後に実測してください。APIの優位性を事前に実測済みとは扱いません。
@@ -40,3 +41,5 @@ node shutter-run/tests/server.mjs
 [Decisions API公式仕様](https://developers.openai.com/api/docs/guides/decisions)
 
 サーバーは設定ポートのlocalhost / 127.0.0.1のHostだけを受け付け、Originも固定のlocalhost originsと明示したALLOWED_ORIGINで照合します。HostやX-Forwarded-Hostから許可originを作りません。ALLOWED_ORIGINはパス・末尾スラッシュ・認証情報を含まない正確なHTTP(S) originを指定してください。リバースプロキシを使う場合もバックエンドのHostを上記の固定値に設定してください。サーバーテストではDNS rebinding相当の不正ヘッダー36ケースを検証し、実API呼び出しは行いません。
+
+26枚突破後、ブラウザー標準のSpeechSynthesisで英語の「danger, danger」を約3秒ごとに繰り返します。音声警告は初期ON、画面上部からOFFにできます。一時停止・終了・再挑戦時に発話をキャンセルします。対応ブラウザーと利用可能な音声が必要です。
